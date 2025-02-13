@@ -1,38 +1,115 @@
+:root {
+  --green: #60d7b9;
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  background-color: var(--green);
+  width: 100%;
+  max-width: 50rem;
+  margin: 24px auto;
+  box-shadow: -14px 14px 5px rgba(0, 0, 0, 0.1);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.intro {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 32px;
+  padding: 32px;
+}
+.introSettings {
+  min-width: 380px;
+}
+
+.settingsContainer {
+  width: 100%;
+  min-height: 1px;
+  position: relative;
+}
+.settingsButton {
+  position: absolute;
+  right: 8px;
+  top: 14px;
+}
+.settings {
+  background: #313131;
+  color: white;
+  padding: 12px 40px;
+}
+.sentenceSetting {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.logo {
+  height: 80px;
+  margin-top: 20px;
+}
+
+.columns {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  margin: 24px;
+}
+.rows {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.letter {
+  width: 1.5em;
+  height: 1.5em;
+  background: #313131;
+  color: #dddddd;
+  font-weight: bold;
+  border: 1px solid #5b5b5b;
+  line-height: 1.5em;
+  text-align: center;
+}
+.letter:first-of-type {
+  border-radius: 6px 0 0 6px;
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.letter:last-of-type {
+  border-radius: 0 6px 6px 0;
+  margin-right: 4px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input {
+  flex: 1;
+}
+
+.actions {
+  height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+.icon {
+  opacity: 0.3;
+}
+.icon.active {
+  opacity: 1;
+}
+.scoreBox {
+  width: 1.5em;
+  height: 1.5em;
+  line-height: 1.5em;
+  font-weight: bold;
+}
+
+.bottomContainer {
+  padding: 24px;
 }
