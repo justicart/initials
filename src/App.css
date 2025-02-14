@@ -3,6 +3,7 @@
 }
 
 .App {
+  height: 100dvh;
   text-align: center;
 }
 
@@ -44,6 +45,7 @@
   display: flex;
   flex-direction: row;
   gap: 8px;
+  margin-bottom: 8px;
 }
 
 .logo {
@@ -51,9 +53,14 @@
   margin-top: 20px;
 }
 
+.playArea {
+  flex: 1;
+  overflow: auto;
+}
 .columns {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 24px;
   margin: 24px;
 }
@@ -91,14 +98,14 @@ input {
 }
 
 .actions {
-  height: 24px;
+  height: 26px;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: stretch;
   gap: 4px;
 }
 .icon {
-  opacity: 0.3;
+  opacity: 0.5;
 }
 .icon.active {
   opacity: 1;
@@ -112,4 +119,39 @@ input {
 
 .bottomContainer {
   padding: 24px;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    box-shadow: none;
+    max-width: 100%;
+    height: 100%;
+  }
+  .letterCloud {
+    width: 80%;
+  }
+  .introLogo {
+    width: 90%;
+  }
+  .columns {
+    gap: 4px;
+    margin: 0 12px;
+  }
+  .header {
+    display: flex;
+    flex-direction: row;
+  }
+  .timer {
+    flex: 1;
+  }
+  .logo {
+    height: 26px;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    margin-right: 38px;
+  }
 }

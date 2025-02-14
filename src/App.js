@@ -42,23 +42,25 @@ function App() {
         {!gameStarted ? (
           <div className="intro">
             <img
+              className="letterCloud"
               src="/images/initials_letter_cloud.jpg"
               alt="Initials letter cloud"
             />
-            <img src="/images/initials_logo.jpg" alt="Initials logo" />
-            <div className="introSettings">
+            <img className="introLogo" src="/images/initials_logo.jpg" alt="Initials logo" />
+            <form className="introSettings">
               <div className="sentenceSetting">
                 Sentence:
                 <input type="text" value={sentence} onChange={handleChange} />
                 {formattedSentence.length}/26
               </div>
               <button
-                disabled={formattedSentence.length !== 26}
+                type="submit"
+                disabled={formattedSentence.length < 26}
                 onClick={() => setGameStarted(true)}
               >
                 Start game
               </button>
-            </div>
+            </form>
           </div>
         ) : (
           <>
@@ -82,35 +84,40 @@ function App() {
                 </div>
               )}
             </div>
-            <img
-              className="logo"
-              src="/images/initials_logo.jpg"
-              alt="Initials logo"
-            />
-            <div className="columns">
-              <div className="rows">
-                {lettersLeft.map((letter, i) => {
-                  return (
-                    <Row
-                      key={i}
-                      letter={letter}
-                      sentenceLetter={sentenceLeft[i]}
-                      index={i}
-                    />
-                  );
-                })}
-              </div>
-              <div className="rows">
-                {lettersRight.map((letter, i) => {
-                  return (
-                    <Row
-                      key={i}
-                      letter={letter}
-                      sentenceLetter={sentenceRight[i]}
-                      index={i + midpoint}
-                    />
-                  );
-                })}
+            <div className="header">
+              <div className="timer"></div>
+              <img
+                className="logo"
+                src="/images/initials_logo.jpg"
+                alt="Initials logo"
+              />
+            </div>
+            <div className="playArea">
+              <div className="columns">
+                <div className="rows">
+                  {lettersLeft.map((letter, i) => {
+                    return (
+                      <Row
+                        key={i}
+                        letter={letter}
+                        sentenceLetter={sentenceLeft[i]}
+                        index={i}
+                      />
+                    );
+                  })}
+                </div>
+                <div className="rows">
+                  {lettersRight.map((letter, i) => {
+                    return (
+                      <Row
+                        key={i}
+                        letter={letter}
+                        sentenceLetter={sentenceRight[i]}
+                        index={i + midpoint}
+                      />
+                    );
+                  })}
+                </div>
               </div>
             </div>
             <div className="bottomContainer">
