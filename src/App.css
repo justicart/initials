@@ -133,9 +133,11 @@ input {
   }
   .letterCloud {
     width: 80%;
+    aspect-ratio: 517 / 489;
   }
   .introLogo {
     width: 90%;
+    aspect-ratio: 623 / 146;
   }
   .columns {
     gap: 4px;
