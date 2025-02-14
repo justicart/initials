@@ -134,10 +134,12 @@ input {
   .letterCloud {
     width: 80%;
     aspect-ratio: 517 / 489;
+    object-fit: contain;
   }
   .introLogo {
     width: 90%;
     aspect-ratio: 623 / 146;
+    object-fit: contain;
   }
   .columns {
     gap: 4px;
