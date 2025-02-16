@@ -1,14 +1,30 @@
 import { useContext } from "react";
 import Actions from "./Actions";
 import { AppContext } from "../contexts/AppContext";
+import ResizableInput from "./ResizableInput";
 
 export default function Row({ letter, sentenceLetter, index }) {
-  const { showScoring } = useContext(AppContext);
+  const { roundNames, setRoundNames, round, showScoring } = useContext(AppContext);
+
+  function handleChange(text) {
+    const newNames = [...roundNames[round]]
+    newNames[index] = text;
+    const newRoundNames = {...roundNames, [round]: newNames};
+    setRoundNames(newRoundNames)
+  }
+
+  const letters = [
+    round === 1 ? letter : sentenceLetter,
+    round === 1 ? sentenceLetter : letter,
+  ]
+
   return (
     <div className="row">
-      <div className="letter">{letter.toUpperCase()}</div>
-      <div className="letter">{sentenceLetter.toUpperCase()}</div>
-      <input />
+      <div className="letter">{letters[0].toUpperCase()}</div>
+      <div className="letter">{letters[1].toUpperCase()}</div>
+      <div className="inputContainer">
+        <ResizableInput value={roundNames[round][index] ?? ""} handleChange={handleChange} forceResize={showScoring} />
+      </div>
       {showScoring && <Actions scoreIndex={index} />}
     </div>
   );

@@ -15,10 +15,14 @@ const lettersRight = letters.slice(midpoint);
 function App() {
   const [showSettings, setShowSettings] = useState(false);
   const {
+    gameStarted,
+    round,
+    setRound,
+    setRoundNames,
     scores,
+    setScores,
     sentence,
     setSentence,
-    gameStarted,
     setGameStarted,
     showScoring,
     setShowScoring,
@@ -32,9 +36,24 @@ function App() {
     setSentence(e.target.value);
   };
 
-  const score = Object.values(scores).reduce((total, current) => {
-    return total + (current ?? 0);
-  }, 0);
+  const handleSwap = () => {
+    const nextRound = round === 1 ? 2 : 1;
+    setRound(nextRound)
+  }
+
+  const handleNewGame = () => {
+    setRound(1);
+    setScores({1: [], 2: []});
+    setRoundNames({1: [], 2: []});
+  }
+
+  const score = [];
+  Object.values(scores).forEach(scoreArray => {
+    const totalScore = scoreArray.reduce((total, current) => {
+      return total + (current ?? 0);
+    }, 0)
+    score.push(totalScore)
+  });
 
   return (
     <div className="App">
@@ -93,12 +112,12 @@ function App() {
               />
             </div>
             <div className="playArea">
-              <div className="columns">
+              <div className="columnsToRows">
                 <div className="rows">
                   {lettersLeft.map((letter, i) => {
                     return (
                       <Row
-                        key={i}
+                        key={`column1_${i}`}
                         letter={letter}
                         sentenceLetter={sentenceLeft[i]}
                         index={i}
@@ -110,7 +129,7 @@ function App() {
                   {lettersRight.map((letter, i) => {
                     return (
                       <Row
-                        key={i}
+                        key={`column2_${i}`}
                         letter={letter}
                         sentenceLetter={sentenceRight[i]}
                         index={i + midpoint}
@@ -121,10 +140,18 @@ function App() {
               </div>
             </div>
             <div className="bottomContainer">
-              {showScoring && <div>Score: {score}</div>}
-              <button onClick={() => setShowScoring(!showScoring)}>
-                {showScoring ? "Hide" : "Show"} scoring
-              </button>
+              {showScoring && <div>Round 1: {score[0]}, Round 2: {score[1]}</div>}
+              <div className="buttonRow">
+                <button onClick={handleNewGame}>
+                  New game
+                </button>
+                <button onClick={() => setShowScoring(!showScoring)}>
+                  {showScoring ? "Hide" : "Show"} scoring
+                </button>
+                <button onClick={handleSwap}>
+                  Go to round {round === 1 ? 2 : 1}
+                </button>
+              </div>
             </div>
           </>
         )}

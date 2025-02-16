@@ -1,36 +1,31 @@
 import { useContext } from "react";
 
-import CrossIcon from "./CrossIcon";
-import ManyPeopleIcon from "./ManyPeopleIcon";
-import OnePersonIcon from "./OnePersonIcon";
+import ScoreIcon from "./ScoreIcon";
 import { AppContext } from "../contexts/AppContext";
 
 export default function Actions({scoreIndex}) {
-  const {scores, setScores} = useContext(AppContext);
+  const {round, scores, setScores} = useContext(AppContext);
 
   const handleScore = (score) => {
-    if (scores[scoreIndex] === score) {
-      setScores({...scores, [scoreIndex]: null})
+    const roundScores = [...scores[round]];
+    if (roundScores[scoreIndex] === score) {
+      roundScores[scoreIndex] = null;
     } else {
-      setScores({...scores, [scoreIndex]: score})
+      roundScores[scoreIndex] = score;
     }
+    setScores({...scores, [round]: roundScores})
   }
 
   return (
     <div className="actions">
       <div
-        className={`icon ${scores[scoreIndex] === 3 ? "active" : ""}`}
-        onClick={() => handleScore(3)}
-      ><OnePersonIcon color="#0586ff" /></div>
-      <div
-        className={`icon ${scores[scoreIndex] === 1 ? "active" : ""}`}
+        className="icon"
         onClick={() => handleScore(1)}
-      ><ManyPeopleIcon color="#01449f" /></div>
+      ><ScoreIcon score={1} active={scores[round][scoreIndex] === 1 ? "active" : ""} /></div>
       <div
-        className={`icon ${scores[scoreIndex] === 0 ? "active" : ""}`}
-        onClick={() => handleScore(0)}
-      ><CrossIcon color="#9f0122" /></div>
-      <div className="scoreBox">{scores[scoreIndex] ?? ""}</div>
+        className="icon"
+        onClick={() => handleScore(3)}
+      ><ScoreIcon score={3} active={scores[round][scoreIndex] === 3 ? "active" : ""} /></div>
     </div>
   )
 }
