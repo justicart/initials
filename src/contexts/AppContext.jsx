@@ -8,7 +8,7 @@ export const AppContext = React.createContext({
 })
 
 export const AppProvider = (props) => {
-  const [gameStarted, setGameStarted] = useState(true);
+  const [gameStarted, setGameStarted] = useState(false);
   const [showScoring, setShowScoring] = useState(false);
   const [scores, setScores] = useState({1: [], 2: []});
   const [round, setRound] = useState(1);
