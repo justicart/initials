@@ -1,14 +1,10 @@
-import { useState, useRef, useEffect } from "react";
+import { useCallback, useState, useRef, useEffect } from "react";
 
 const ResizableInput = ({forceResize, value, handleChange}) => {
   const [fontSize, setFontSize] = useState(24); // Default font size
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    adjustFontSize();
-  }, [value, forceResize]);
-
-  const adjustFontSize = () => {
+  const adjustFontSize = useCallback(() => {
     if (!inputRef.current) return;
 
     const input = inputRef.current;
@@ -27,7 +23,11 @@ const ResizableInput = ({forceResize, value, handleChange}) => {
     }
 
     setFontSize(newFontSize);
-  };
+  }, [value]);
+
+  useEffect(() => {
+    adjustFontSize();
+  }, [value, forceResize, adjustFontSize]);
 
   return (
     <input
