@@ -38,21 +38,27 @@ function App() {
 
   const handleSwap = () => {
     const nextRound = round === 1 ? 2 : 1;
-    setRound(nextRound)
+    setRound(nextRound);
+  };
+
+  const handleStart = () => {
+    // TODO: Make a bunch of sentences and choose at random
+    setSentence("California to New York friends");
+    setGameStarted(true);
   }
 
   const handleNewGame = () => {
     setRound(1);
-    setScores({1: [], 2: []});
-    setRoundNames({1: [], 2: []});
-  }
+    setScores({ 1: [], 2: [] });
+    setRoundNames({ 1: [], 2: [] });
+  };
 
   const score = [];
-  Object.values(scores).forEach(scoreArray => {
+  Object.values(scores).forEach((scoreArray) => {
     const totalScore = scoreArray.reduce((total, current) => {
       return total + (current ?? 0);
-    }, 0)
-    score.push(totalScore)
+    }, 0);
+    score.push(totalScore);
   });
 
   return (
@@ -65,19 +71,24 @@ function App() {
               src="/images/initials_letter_cloud.jpg"
               alt="Initials letter cloud"
             />
-            <img className="introLogo" src="/images/initials_logo.jpg" alt="Initials logo" />
+            <img
+              className="introLogo"
+              src="/images/initials_logo.jpg"
+              alt="Initials logo"
+            />
             <form className="introSettings">
               <div className="sentenceSetting">
-                Sentence:
-                <input type="text" value={sentence} onChange={handleChange} />
-                {formattedSentence.length}/26
+                Write a sentence, or leave blank to get a random one
+                <div>
+                  <input type="text" value={sentence} onChange={handleChange} />
+                  <div>{formattedSentence.length}/26</div>
+                </div>
               </div>
               <button
                 type="submit"
-                disabled={formattedSentence.length < 26}
-                onClick={() => setGameStarted(true)}
+                onClick={handleStart}
               >
-                Start game
+                {formattedSentence.length < 26 ? "Random sentence" : "Start game"}
               </button>
             </form>
           </div>
@@ -92,14 +103,12 @@ function App() {
               </div>
               {showSettings && (
                 <div className="settings">
-                  <div className="row">
-                    Sentence:
-                    <input
-                      type="text"
-                      value={sentence}
-                      onChange={handleChange}
-                    />
-                  </div>
+                  Sentence:
+                  <input
+                    type="text"
+                    value={sentence}
+                    onChange={handleChange}
+                  />
                 </div>
               )}
             </div>
@@ -140,17 +149,23 @@ function App() {
               </div>
             </div>
             <div className="bottomContainer">
-              {showScoring && <div>Round 1: {score[0]}, Round 2: {score[1]}</div>}
+              {showScoring && (
+                <div onClick={handleSwap}>
+                  Round 1: {score[0]}, Round 2: {score[1]}
+                </div>
+              )}
               <div className="buttonRow">
-                <button onClick={handleNewGame}>
-                  New game
-                </button>
                 <button onClick={() => setShowScoring(!showScoring)}>
                   {showScoring ? "Hide" : "Show"} scoring
                 </button>
-                <button onClick={handleSwap}>
-                  Go to round {round === 1 ? 2 : 1}
-                </button>
+                <div>
+                  Round {round}{" "}
+                  {round === 2 ? (
+                    <button onClick={handleNewGame}>New game</button>
+                  ) : (
+                    <button onClick={handleSwap}>Next round</button>
+                  )}
+                </div>
               </div>
             </div>
           </>

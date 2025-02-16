@@ -13,7 +13,7 @@ export const AppProvider = (props) => {
   const [scores, setScores] = useState({1: [], 2: []});
   const [round, setRound] = useState(1);
   const [roundNames, setRoundNames] = useState({1: [], 2: []});
-  const [sentence, setSentence] = useState("California to New York friends");
+  const [sentence, setSentence] = useState("");
 
   return (
     <AppContext.Provider value={{

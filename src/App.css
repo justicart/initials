@@ -46,9 +46,17 @@
 }
 .sentenceSetting {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 8px;
-  margin-bottom: 8px;
+  margin: 8px auto;
+  width: 80%;
+}
+.sentenceSetting .row {
+  gap: 8px;
+}
+.settings input,
+.sentenceSetting input {
+  flex: 1;
 }
 
 .logo {
@@ -66,6 +74,7 @@
   flex-wrap: wrap;
   gap: 24px;
   margin: 24px;
+  margin-bottom: 30px;
 }
 .rows {
   flex: 1;
@@ -157,7 +166,18 @@
 }
 
 .bottomContainer {
+  position: relative;
   padding: 24px;
+  padding-top: 0;
+}
+.bottomContainer::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background: linear-gradient(transparent, var(--green))
 }
 
 @media only screen and (max-width: 600px) {
@@ -180,13 +200,18 @@
     aspect-ratio: 623 / 146;
     object-fit: contain;
   }
+  .settings input,
+  .sentenceSetting input {
+    font-size: 1.4em;
+    width: 100%;
+  }
   .playArea {
     font-size: 1.6em;
   }
   .columnsToRows {
     flex-direction: column;
     gap: 4px;
-    margin: 0 12px;
+    margin: 0 12px 30px;
   }
   .header {
     display: flex;
