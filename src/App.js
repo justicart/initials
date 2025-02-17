@@ -63,7 +63,9 @@ function App() {
   };
 
   const handleStart = () => {
-    setSentence(sentences[Math.floor(Math.random() * sentences.length)]);
+    if (formattedSentence.length < 26) {
+      setSentence(sentences[Math.floor(Math.random() * sentences.length)])
+    }
     setGameStarted(true);
   };
 

@@ -45,6 +45,9 @@ button.buttonSecondary.onDark {
   gap: 32px;
   padding: 32px;
 }
+.letterCloud {
+  width: 50%;
+}
 .introSettings {
   min-width: 380px;
 }
