@@ -5,10 +5,13 @@ export const AppContext = React.createContext({
   round: 1, setRound: () => {},
   roundNames: {1: [], 2: []}, setRoundNames: () => {},
   sentence: "", setSentence: () => {},
+  showRules: false, setShowRules: () => {},
+  showScoring: false, setShowScoring: () => {},
 })
 
 export const AppProvider = (props) => {
   const [gameStarted, setGameStarted] = useState(false);
+  const [showRules, setShowRules] = useState(false);
   const [showScoring, setShowScoring] = useState(false);
   const [scores, setScores] = useState({1: [], 2: []});
   const [round, setRound] = useState(1);
@@ -23,6 +26,7 @@ export const AppProvider = (props) => {
       round, setRound,
       roundNames, setRoundNames,
       showScoring, setShowScoring,
+      showRules, setShowRules,
     }}>
       {props.children}
     </AppContext.Provider>

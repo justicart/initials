@@ -2,7 +2,26 @@ import { useContext, useState } from "react";
 import "./App.css";
 import SettingsIcon from "./components/SettingsIcon";
 import Row from "./components/Row";
+import Rules from "./components/Rules";
 import { AppContext } from "./contexts/AppContext";
+
+const sentences = [
+  "Play a new game with your family",
+  "Friends stick together always",
+  "Playing board games is perfect",
+  "Basketball games bring people",
+  "True friendship lasts forever",
+  "Gaming with buddies is the best",
+  "Friends make life worth living",
+  "Treasure hunt adventures rock",
+  "Dancing with friends is joyful",
+];
+
+// confirm sentence lengths
+// sentences.forEach(sentence => {
+//   const formattedSentence = sentence.replace(/[^a-zA-Z]/g, "");
+//   console.log(sentence, formattedSentence.length)
+// })
 
 const letters = Array.from({ length: 26 }, (_, i) =>
   String.fromCharCode(97 + i)
@@ -26,6 +45,8 @@ function App() {
     setGameStarted,
     showScoring,
     setShowScoring,
+    showRules,
+    setShowRules,
   } = useContext(AppContext);
 
   let formattedSentence = sentence.replace(/[^a-zA-Z]/g, "");
@@ -42,15 +63,16 @@ function App() {
   };
 
   const handleStart = () => {
-    // TODO: Make a bunch of sentences and choose at random
-    setSentence("California to New York friends");
+    setSentence(sentences[Math.floor(Math.random() * sentences.length)]);
     setGameStarted(true);
-  }
+  };
 
   const handleNewGame = () => {
     setRound(1);
     setScores({ 1: [], 2: [] });
     setRoundNames({ 1: [], 2: [] });
+    setSentence("");
+    setGameStarted(false);
   };
 
   const score = [];
@@ -64,6 +86,7 @@ function App() {
   return (
     <div className="App">
       <div className="container">
+        {showRules && <Rules />}
         {!gameStarted ? (
           <div className="intro">
             <img
@@ -84,13 +107,18 @@ function App() {
                   <div>{formattedSentence.length}/26</div>
                 </div>
               </div>
-              <button
-                type="submit"
-                onClick={handleStart}
-              >
-                {formattedSentence.length < 26 ? "Random sentence" : "Start game"}
+              <button type="submit" onClick={handleStart}>
+                {formattedSentence.length < 26
+                  ? "Random sentence"
+                  : "Start game"}
               </button>
             </form>
+            <button
+              className="buttonSecondary"
+              onClick={() => setShowRules(true)}
+            >
+              Learn how to play...
+            </button>
           </div>
         ) : (
           <>
@@ -103,12 +131,16 @@ function App() {
               </div>
               {showSettings && (
                 <div className="settings">
-                  Sentence:
-                  <input
-                    type="text"
-                    value={sentence}
-                    onChange={handleChange}
-                  />
+                  <div>
+                    Sentence:
+                    <input type="text" value={sentence} onChange={handleChange} />
+                  </div>
+                  <button
+                    className="buttonSecondary onDark"
+                    onClick={() => setShowRules(true)}
+                  >
+                    Learn how to play...
+                  </button>
                 </div>
               )}
             </div>
