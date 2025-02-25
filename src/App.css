@@ -1,6 +1,7 @@
 :root {
   --green: #60d7b9;
   --text: black;
+  --button: #e9eaed;
 }
 
 body {
@@ -10,6 +11,7 @@ body {
 }
 
 button {
+  background: var(--button);
   font-family: 'Jost';
   font-weight: 500;
   text-transform: uppercase;
@@ -17,6 +19,7 @@ button {
   border-radius: 14px;
   padding: 2px 8px;
   border: none;
+  color: var(--text);
 }
 button.buttonSecondary {
   background: none;

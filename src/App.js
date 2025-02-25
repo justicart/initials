@@ -112,7 +112,7 @@ function App() {
               <div className="buttonRow">
                 <button
                   type="button"
-                  className="buttonSecondary"
+                  className="button"
                   onClick={() => setShowRules(true)}
                 >
                   Instructions
