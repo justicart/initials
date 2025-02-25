@@ -20,8 +20,8 @@ export default function Row({ letter, sentenceLetter, index }) {
 
   return (
     <div className="row">
-      <div className="letter">{letters[0].toUpperCase()}</div>
-      <div className="letter">{letters[1].toUpperCase()}</div>
+      <div className="letter">{(letters[0] ?? "").toUpperCase()}</div>
+      <div className="letter">{(letters[1] ?? "").toUpperCase()}</div>
       <div className="inputContainer">
         <ResizableInput value={roundNames[round][index] ?? ""} handleChange={handleChange} forceResize={showScoring} />
       </div>
