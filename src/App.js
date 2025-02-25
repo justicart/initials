@@ -103,24 +103,26 @@ function App() {
             />
             <form className="introSettings">
               <div className="sentenceSetting">
-                Write a sentence, or leave blank to get a random one
+                Type your own sentence or start game with a random sentence
                 <div>
                   <input type="text" value={sentence} onChange={handleChange} />
                   <div>{formattedSentence.length}/26</div>
                 </div>
               </div>
-              <button type="submit" onClick={handleStart}>
-                {formattedSentence.length < 26
-                  ? "Random sentence"
-                  : "Start game"}
-              </button>
+              <div className="buttonRow">
+                <button
+                  type="button"
+                  className="buttonSecondary"
+                  onClick={() => setShowRules(true)}
+                >
+                  Instructions
+                </button>
+                <button type="submit" onClick={handleStart}>
+                  Start game
+                </button>
+              </div>
             </form>
-            <button
-              className="buttonSecondary"
-              onClick={() => setShowRules(true)}
-            >
-              Learn how to play...
-            </button>
+            
           </div>
         ) : (
           <>
@@ -141,13 +143,15 @@ function App() {
                     className="buttonSecondary onDark"
                     onClick={() => setShowRules(true)}
                   >
-                    Learn how to play...
+                    Instructions
                   </button>
                 </div>
               )}
             </div>
             <div className="header">
-              <div className="timer"></div>
+              <div className="timer">
+                Round {round}{showScoring && ` - ${score[round - 1]} points`}
+              </div>
               <img
                 className="logo"
                 src="/images/initials_logo.jpg"
@@ -183,17 +187,11 @@ function App() {
               </div>
             </div>
             <div className="bottomContainer">
-              {showScoring && (
-                <div onClick={handleSwap}>
-                  Round 1: {score[0]}, Round 2: {score[1]}
-                </div>
-              )}
               <div className="buttonRow">
                 <button onClick={() => setShowScoring(!showScoring)}>
-                  {showScoring ? "Hide" : "Show"} scoring
+                  {showScoring ? "Hide" : "Show"} scores
                 </button>
                 <div>
-                  Round {round}{" "}
                   {round === 2 ? (
                     <button onClick={handleNewGame}>New game</button>
                   ) : (

@@ -10,9 +10,12 @@ body {
 }
 
 button {
-  font-family: "Bree Serif", serif;
-  border-radius: 12px;
-  padding: 6px 12px;
+  font-family: 'Jost';
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  border-radius: 14px;
+  padding: 2px 8px;
   border: none;
 }
 button.buttonSecondary {
@@ -50,6 +53,11 @@ button.buttonSecondary.onDark {
 }
 .introSettings {
   min-width: 380px;
+  padding: 0 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .settingsContainer {
@@ -59,8 +67,8 @@ button.buttonSecondary.onDark {
 }
 .settingsButton {
   position: absolute;
-  right: 8px;
-  top: 14px;
+  right: 6px;
+  top: 8px;
 }
 .settings {
   background: #313131;
@@ -74,7 +82,7 @@ button.buttonSecondary.onDark {
 .sentenceSetting {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 24px;
   margin: 8px auto;
   width: 80%;
 }
@@ -223,6 +231,15 @@ button.buttonSecondary.onDark {
   font-size: 50px;
 }
 
+.timer {
+  flex: 1 1;
+  text-align: left;
+  font-size: 1.5em;
+  font-family: "Jost";
+  padding: 5px 12px;
+  font-weight: 500;
+}
+
 @media only screen and (max-width: 600px) {
   .container {
     display: flex;
@@ -259,9 +276,6 @@ button.buttonSecondary.onDark {
   .header {
     display: flex;
     flex-direction: row;
-  }
-  .timer {
-    flex: 1;
   }
   .logo {
     height: 26px;
