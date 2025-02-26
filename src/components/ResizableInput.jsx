@@ -1,6 +1,6 @@
 import { useCallback, useState, useRef, useEffect } from "react";
 
-const ResizableInput = ({forceResize, value, handleChange}) => {
+const ResizableInput = ({forceResize, value, handleChange, readonly = false}) => {
   const [fontSize, setFontSize] = useState(24); // Default font size
   const inputRef = useRef(null);
 
@@ -38,6 +38,7 @@ const ResizableInput = ({forceResize, value, handleChange}) => {
       style={{
         fontSize: `${fontSize}px`,
       }}
+      readOnly={readonly}
     />
   );
 };

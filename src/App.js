@@ -50,7 +50,7 @@ function App() {
   } = useContext(AppContext);
 
   let formattedSentence = sentence.replace(/[^a-zA-Z]/g, "");
-  const sentenceLeft = formattedSentence.slice(0, midpoint);
+  const sentenceLeft = formattedSentence.padEnd(26, "-").slice(0, midpoint);
   const sentenceRight = formattedSentence.padEnd(26, "-").slice(midpoint, 26);
 
   const handleChange = (e) => {
@@ -59,17 +59,19 @@ function App() {
 
   const handleSwap = () => {
     const nextRound = round === 1 ? 2 : 1;
+    setShowScoring(false);
     setRound(nextRound);
   };
 
   const handleStart = () => {
     if (formattedSentence.length < 26) {
-      setSentence(sentences[Math.floor(Math.random() * sentences.length)])
+      setSentence(sentences[Math.floor(Math.random() * sentences.length)]);
     }
     setGameStarted(true);
   };
 
   const handleNewGame = () => {
+    setShowScoring(false);
     setRound(1);
     setScores({ 1: [], 2: [] });
     setRoundNames({ 1: [], 2: [] });
@@ -93,17 +95,19 @@ function App() {
           <div className="intro">
             <img
               className="letterCloud"
-              src="/images/initials_letter_cloud.jpg"
+              src="/images/initials_letter_cloud.png"
               alt="Initials letter cloud"
             />
             <img
               className="introLogo"
-              src="/images/initials_logo.jpg"
+              src="/images/initials_logo.png"
               alt="Initials logo"
             />
             <form className="introSettings">
               <div className="sentenceSetting">
-                Type your own sentence or start game with a random sentence
+                <div className="settingsText">
+                  Type your own sentence or start game with a random sentence
+                </div>
                 <div>
                   <input type="text" value={sentence} onChange={handleChange} />
                   <div>{formattedSentence.length}/26</div>
@@ -122,7 +126,6 @@ function App() {
                 </button>
               </div>
             </form>
-            
           </div>
         ) : (
           <>
@@ -136,25 +139,38 @@ function App() {
               {showSettings && (
                 <div className="settings">
                   <div>
-                    Sentence:
-                    <input type="text" value={sentence} onChange={handleChange} />
+                    <div className="settingsText">Sentence:</div>
+                    <input
+                      type="text"
+                      value={sentence}
+                      onChange={handleChange}
+                    />
                   </div>
-                  <button
-                    className="buttonSecondary onDark"
-                    onClick={() => setShowRules(true)}
-                  >
-                    Instructions
-                  </button>
+                  <div className="buttonRow">
+                    <button
+                      className="buttonSecondary onDark"
+                      onClick={() => setShowRules(true)}
+                    >
+                      Instructions
+                    </button>
+                    <button className="button" onClick={handleNewGame}>
+                      New game
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
             <div className="header">
               <div className="timer">
-                Round {round}{showScoring && ` - ${score[round - 1]} points`}
+                Round {round}
+                {showScoring &&
+                  ` - ${score[round - 1]} point${
+                    score[round - 1] === 1 ? "" : "s"
+                  }`}
               </div>
               <img
                 className="logo"
-                src="/images/initials_logo.jpg"
+                src="/images/initials_logo.png"
                 alt="Initials logo"
               />
             </div>
