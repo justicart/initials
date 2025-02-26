@@ -103,6 +103,7 @@ button.buttonSecondary.onDark {
   flex: 1;
   border: none;
   border-radius: 6px;
+  box-sizing: border-box;
 }
 
 .logo {
