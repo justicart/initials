@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: var(--green);
+  background-color: white;
   font-family: "Bree Serif", serif;
   font-weight: 400;
   font-style: normal;
@@ -38,6 +38,7 @@ button.buttonSecondary.onDark {
 }
 
 .container {
+  background-color: var(--green);
   width: 100%;
   max-width: 50rem;
   margin: 24px auto;
@@ -293,6 +294,7 @@ button.buttonSecondary.onDark {
       100% / cover;
   }
   .container {
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     justify-content: center;
