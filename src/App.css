@@ -14,7 +14,7 @@ body {
 
 button {
   background: var(--button);
-  font-family: 'Jost';
+  font-family: "Jost";
   font-weight: 500;
   text-transform: uppercase;
   font-size: 1.2em;
@@ -90,7 +90,7 @@ button.buttonSecondary.onDark {
   margin: 8px auto;
 }
 .settingsText {
-  font-family: 'Jost';
+  font-family: "Jost";
   font-weight: 500;
   font-size: 1.2em;
   line-height: 1.2em;
@@ -221,7 +221,7 @@ button.buttonSecondary.onDark {
   left: 0;
   width: 100%;
   height: 30px;
-  background: linear-gradient(transparent, var(--green))
+  background: linear-gradient(transparent, var(--green));
 }
 
 .rules {
@@ -233,7 +233,7 @@ button.buttonSecondary.onDark {
   background: white;
   z-index: 2;
   overflow-y: auto;
-  font-family: 'Jost';
+  font-family: "Jost";
   text-align: left;
   padding: 24px;
   box-sizing: border-box;
@@ -289,7 +289,8 @@ button.buttonSecondary.onDark {
 
 @media only screen and (max-width: 600px) {
   body {
-    background: url(/public/images/background.jpg) no-repeat 100% 100%/cover;
+    background: var(--green) url(/public/images/background.jpg) no-repeat 100%
+      100% / cover;
   }
   .container {
     display: flex;
@@ -334,4 +335,3 @@ button.buttonSecondary.onDark {
     margin-right: 38px;
   }
 }
-
