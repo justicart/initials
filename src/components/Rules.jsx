@@ -70,19 +70,15 @@ export default function Rules() {
         <span>MAKE IT TOUGHER/CHANGE IT UP</span>
       </h2>
       <div>Try playing the game only using: Athletes</div>
-      <div>
+      <div style={{marginTop: 10}}>
         Instead of coming up with a sentence, try doubling the alphabet: A.A.,
         B.B., C.C., D.D., etc.
       </div>
       <div className="footer">
-        <p>
-          iNiTiALS, the distinctive design of the game in its entirety is a
-          trademark of Tousley Designs LLC.
-        </p>
-        <p>
-          Rules © 2020, Tousley Designs 231 E 110th Street, New York, NY 10029
-          #2. All Rights Reserved. Printed in U.S.A.
-        </p>
+        <p>iNiTiALS, the distinctive design of the game in its entirety is a
+        trademark of Tousley Designs LLC.</p><p>Rules © 2020, Tousley Designs 231 E
+        110th Street, New York, NY 10029 #2. All Rights Reserved. Printed in
+        U.S.A.</p>
       </div>
     </div>
   );
