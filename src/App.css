@@ -105,6 +105,9 @@ button.buttonSecondary.onDark {
   border: none;
   border-radius: 6px;
   box-sizing: border-box;
+  font-size: 1.4em;
+  width: 100%;
+  max-width: 350px;
 }
 
 .logo {
@@ -115,6 +118,7 @@ button.buttonSecondary.onDark {
 .playArea {
   flex: 1;
   overflow: auto;
+  font-size: 1.4em;
 }
 .columnsToRows {
   display: flex;
