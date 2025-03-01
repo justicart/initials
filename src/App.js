@@ -3,7 +3,9 @@ import "./App.css";
 import SettingsIcon from "./components/SettingsIcon";
 import Row from "./components/Row";
 import Rules from "./components/Rules";
+import ScoreGrid from "./components/ScoreGrid";
 import { AppContext } from "./contexts/AppContext";
+import { formatSentence } from "./lib";
 
 const sentences = [
   "Play a new game with your family",
@@ -40,6 +42,8 @@ function App() {
     setRoundNames,
     scores,
     setScores,
+    previousScores,
+    setPreviousScores,
     sentence,
     setSentence,
     setGameStarted,
@@ -49,7 +53,7 @@ function App() {
     setShowRules,
   } = useContext(AppContext);
 
-  let formattedSentence = sentence.replace(/[^a-zA-Z]/g, "");
+  let formattedSentence = formatSentence(sentence);
   const sentenceLeft = formattedSentence.padEnd(26, "-").slice(0, midpoint);
   const sentenceRight = formattedSentence.padEnd(26, "-").slice(midpoint, 26);
 
@@ -71,6 +75,7 @@ function App() {
   };
 
   const handleNewGame = () => {
+    setPreviousScores(scores);
     setShowScoring(false);
     setRound(1);
     setScores({ 1: [], 2: [] });
@@ -126,6 +131,7 @@ function App() {
                 </button>
               </div>
             </form>
+            {previousScores && <ScoreGrid previous={true} />}
           </div>
         ) : (
           <>
@@ -139,7 +145,12 @@ function App() {
               {showSettings && (
                 <div className="settings">
                   <div>
-                    <div className="settingsText">Sentence:</div>
+                    <div className="settingsText">
+                      Sentence{" "}
+                      <span className="secondaryText">
+                        {formattedSentence.length}/26
+                      </span>
+                    </div>
                     <input
                       type="text"
                       value={sentence}
