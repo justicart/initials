@@ -7,9 +7,8 @@ export default function Row({
   letter,
   sentenceLetter,
   index,
-  readonly = false,
 }) {
-  const { roundNames, setRoundNames, round, showScoring } =
+  const { isScoringRound, roundNames, setRoundNames, round } =
     useContext(AppContext);
 
   function handleChange(text) {
@@ -32,11 +31,11 @@ export default function Row({
         <ResizableInput
           value={roundNames[round][index] ?? ""}
           handleChange={handleChange}
-          forceResize={showScoring}
-          readonly={readonly}
+          forceResize={isScoringRound}
+          readonly={isScoringRound}
         />
       </div>
-      {showScoring && !readonly && <Actions scoreIndex={index} />}
+      {isScoringRound && <Actions scoreIndex={index} />}
     </div>
   );
 }

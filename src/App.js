@@ -21,8 +21,8 @@ const sentences = [
 
 // confirm sentence lengths
 // sentences.forEach(sentence => {
-//   const formattedSentence = sentence.replace(/[^a-zA-Z]/g, "");
-//   console.log(sentence, formattedSentence.length)
+//   const formattedSentence = formatSentence(sentence);
+//   console.log(sentence, formattedSentence.length);
 // })
 
 const letters = Array.from({ length: 26 }, (_, i) =>
@@ -36,9 +36,11 @@ const lettersRight = letters.slice(midpoint);
 function App() {
   const [showSettings, setShowSettings] = useState(false);
   const {
-    gameStarted,
     round,
-    setRound,
+    isScoringRound,
+    GAME_STATES,
+    gameState,
+    setGameState,
     setRoundNames,
     scores,
     setScores,
@@ -46,9 +48,6 @@ function App() {
     setPreviousScores,
     sentence,
     setSentence,
-    setGameStarted,
-    showScoring,
-    setShowScoring,
     showRules,
     setShowRules,
   } = useContext(AppContext);
@@ -61,27 +60,29 @@ function App() {
     setSentence(e.target.value);
   };
 
-  const handleSwap = () => {
-    const nextRound = round === 1 ? 2 : 1;
-    setShowScoring(false);
-    setRound(nextRound);
+  const handleAdvance = () => {
+    setGameState((currentGameState) => {
+      let nextStateIndex = Object.values(GAME_STATES).indexOf(currentGameState) + 1;
+      if (nextStateIndex > Object.values(GAME_STATES).length - 1) {
+        nextStateIndex = 0;
+      }
+      return Object.values(GAME_STATES)[nextStateIndex];
+    });
   };
 
   const handleStart = () => {
     if (formattedSentence.length < 26) {
       setSentence(sentences[Math.floor(Math.random() * sentences.length)]);
     }
-    setGameStarted(true);
+    setGameState(GAME_STATES.ROUND1);
   };
 
   const handleNewGame = () => {
+    setGameState(GAME_STATES.IDLE);
     setPreviousScores(scores);
-    setShowScoring(false);
-    setRound(1);
     setScores({ 1: [], 2: [] });
     setRoundNames({ 1: [], 2: [] });
     setSentence("");
-    setGameStarted(false);
   };
 
   const score = [];
@@ -92,143 +93,175 @@ function App() {
     score.push(totalScore);
   });
 
+  const advanceButtonText = {
+    [GAME_STATES.ROUND1]: "Round 1 scoring",
+    [GAME_STATES.ROUND1SCORING]: "Next round",
+    [GAME_STATES.ROUND2]: "Round 2 scoring",
+    [GAME_STATES.ROUND2SCORING]: "Review",
+  }
+  console.log("IS SCORING", isScoringRound)
+
+  const intro = (
+    <div className="intro">
+      <img
+        className="letterCloud"
+        src="/images/initials_letter_cloud.png"
+        alt="Initials letter cloud"
+      />
+      <img
+        className="introLogo"
+        src="/images/initials_logo.png"
+        alt="Initials logo"
+      />
+      <form className="introSettings">
+        <div className="sentenceSetting">
+          <div className="settingsText">
+            Type your own sentence or start game with a random sentence
+          </div>
+          <div>
+            <input type="text" value={sentence} onChange={handleChange} />
+            <div>{formattedSentence.length}/26</div>
+          </div>
+        </div>
+        <div className="buttonRow">
+          <button
+            type="button"
+            className="button"
+            onClick={() => setShowRules(true)}
+          >
+            Instructions
+          </button>
+          <button type="submit" onClick={handleStart}>
+            Start game
+          </button>
+        </div>
+      </form>
+      {previousScores && <ScoreGrid previous={true} />}
+    </div>
+  )
+
+  const gamePlay = (
+    <>
+      <div className="settingsContainer">
+        <div
+          className={`settingsButton ${showSettings ? "active" : ""}`}
+          onClick={() => setShowSettings(!showSettings)}
+        >
+          <SettingsIcon color={showSettings ? "white" : "black"} />
+        </div>
+        {showSettings && (
+          <div className="settings">
+            <div>
+              <div className="settingsText">
+                Sentence{" "}
+                <span className="secondaryText">
+                  {formattedSentence.length}/26
+                </span>
+              </div>
+              <input
+                type="text"
+                value={sentence}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="buttonRow">
+              <button
+                className="buttonSecondary onDark"
+                onClick={() => setShowRules(true)}
+              >
+                Instructions
+              </button>
+              <button className="button" onClick={handleNewGame}>
+                New game
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="header">
+        <div className="timer"></div>
+        <img
+          className="logo"
+          src="/images/initials_logo.png"
+          alt="Initials logo"
+        />
+      </div>
+      <div className="playArea">
+        <div className="columnsToRows">
+          <div className="rows">
+            {lettersLeft.map((letter, i) => {
+              return (
+                <Row
+                  key={`column1_${i}`}
+                  letter={letter}
+                  sentenceLetter={sentenceLeft[i]}
+                  index={i}
+                />
+              );
+            })}
+          </div>
+          <div className="rows">
+            {lettersRight.map((letter, i) => {
+              return (
+                <Row
+                  key={`column2_${i}`}
+                  letter={letter}
+                  sentenceLetter={sentenceRight[i]}
+                  index={i + midpoint}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      <div className="bottomContainer">
+        <div className="buttonRow">
+          <div className="score">{isScoringRound === true && score[round - 1]}</div>
+          <button onClick={handleAdvance}>{advanceButtonText[gameState]}</button>
+        </div>
+      </div>
+    </>
+  )
+
+  const review = (
+    <>
+      <div className="header">
+        <div className="timer"></div>
+        <img
+          className="logo"
+          src="/images/initials_logo.png"
+          alt="Initials logo"
+        />
+      </div>
+      <div className="review">
+        <h2>Review</h2>
+        <div>
+          <div>The sentence</div>
+          <div>{sentence}</div>
+        </div>
+        <ScoreGrid />
+        <button className="button" onClick={handleNewGame}>
+          New game
+        </button>
+      </div>
+    </>
+  )
+
+  let screen = gamePlay;
+  if (gameState === GAME_STATES.REVIEW) {
+    screen = review;
+  }
+  if (gameState === GAME_STATES.IDLE) {
+    screen = intro;
+  }
+
+  console.log("Game state", gameState)
+
   return (
     <div className="App">
       <div className="container">
         {showRules && <Rules />}
-        {!gameStarted ? (
-          <div className="intro">
-            <img
-              className="letterCloud"
-              src="/images/initials_letter_cloud.png"
-              alt="Initials letter cloud"
-            />
-            <img
-              className="introLogo"
-              src="/images/initials_logo.png"
-              alt="Initials logo"
-            />
-            <form className="introSettings">
-              <div className="sentenceSetting">
-                <div className="settingsText">
-                  Type your own sentence or start game with a random sentence
-                </div>
-                <div>
-                  <input type="text" value={sentence} onChange={handleChange} />
-                  <div>{formattedSentence.length}/26</div>
-                </div>
-              </div>
-              <div className="buttonRow">
-                <button
-                  type="button"
-                  className="button"
-                  onClick={() => setShowRules(true)}
-                >
-                  Instructions
-                </button>
-                <button type="submit" onClick={handleStart}>
-                  Start game
-                </button>
-              </div>
-            </form>
-            {previousScores && <ScoreGrid previous={true} />}
-          </div>
-        ) : (
-          <>
-            <div className="settingsContainer">
-              <div
-                className={`settingsButton ${showSettings ? "active" : ""}`}
-                onClick={() => setShowSettings(!showSettings)}
-              >
-                <SettingsIcon color={showSettings ? "white" : "black"} />
-              </div>
-              {showSettings && (
-                <div className="settings">
-                  <div>
-                    <div className="settingsText">
-                      Sentence{" "}
-                      <span className="secondaryText">
-                        {formattedSentence.length}/26
-                      </span>
-                    </div>
-                    <input
-                      type="text"
-                      value={sentence}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="buttonRow">
-                    <button
-                      className="buttonSecondary onDark"
-                      onClick={() => setShowRules(true)}
-                    >
-                      Instructions
-                    </button>
-                    <button className="button" onClick={handleNewGame}>
-                      New game
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="header">
-              <div className="timer">
-                Round {round}
-                {showScoring &&
-                  ` - ${score[round - 1]} point${
-                    score[round - 1] === 1 ? "" : "s"
-                  }`}
-              </div>
-              <img
-                className="logo"
-                src="/images/initials_logo.png"
-                alt="Initials logo"
-              />
-            </div>
-            <div className="playArea">
-              <div className="columnsToRows">
-                <div className="rows">
-                  {lettersLeft.map((letter, i) => {
-                    return (
-                      <Row
-                        key={`column1_${i}`}
-                        letter={letter}
-                        sentenceLetter={sentenceLeft[i]}
-                        index={i}
-                      />
-                    );
-                  })}
-                </div>
-                <div className="rows">
-                  {lettersRight.map((letter, i) => {
-                    return (
-                      <Row
-                        key={`column2_${i}`}
-                        letter={letter}
-                        sentenceLetter={sentenceRight[i]}
-                        index={i + midpoint}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-            <div className="bottomContainer">
-              <div className="buttonRow">
-                <button onClick={() => setShowScoring(!showScoring)}>
-                  {showScoring ? "Hide" : "Show"} scores
-                </button>
-                <div>
-                  {round === 2 ? (
-                    <button onClick={handleNewGame}>New game</button>
-                  ) : (
-                    <button onClick={handleSwap}>Next round</button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </>
-        )}
+        {screen}
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ export default function ScoreGrid({ previous }) {
   return (
     <div>
       <div className="gridTitle">
-        {previous ? "Last game scores" : "Current scores"}
+        {previous ? "Last game scores" : "Final scores"}
       </div>
       <div className="scoresGrid">
         <div className="leftHeader gridHeader"></div>
