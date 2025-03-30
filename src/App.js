@@ -245,7 +245,7 @@ function App() {
         <div className="buttonRow">
           <div className="score">{isScoringRound === true && score[round - 1]}</div>
           {gameState !== GAME_STATES.ROUND1 && 
-            <button className="buttonSecondary" onClick={handleBack}>◀</button>
+            <button className="buttonSecondary" onClick={handleBack}>←</button>
           }
           <button onClick={handleAdvance}>{advanceButtonText[gameState]}</button>
         </div>
