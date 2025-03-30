@@ -31,6 +31,9 @@ const ResizableInput = ({forceResize, value, handleChange, readonly = false}) =>
 
   return (
     <input
+      autoComplete="off"
+      autoCorrect="off"
+      spellCheck="off"
       ref={inputRef}
       type="text"
       value={value ?? ""}
