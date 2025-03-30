@@ -125,6 +125,7 @@ button.buttonSecondary.onDark {
   flex: 1;
   overflow: auto;
   font-size: 1.4em;
+  -webkit-overflow-scrolling: touch;
 }
 .columnsToRows {
   display: flex;
@@ -402,4 +403,23 @@ button.buttonSecondary.onDark {
     margin-bottom: 12px;
     margin-right: 38px;
   }
+}
+
+/* Prevent layout shifts when the on-screen keyboard opens */
+:root {
+  --vh: 100vh;
+}
+
+@media (max-width: 768px) {
+  :root {
+      --vh: calc(100vh - env(safe-area-inset-bottom));
+  }
+
+  #container {
+      height: var(--vh);
+  }
+}
+
+.play-area {
+  overscroll-behavior: contain; /* Prevents scrolling issues */
 }
