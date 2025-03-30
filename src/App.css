@@ -193,6 +193,7 @@ button.buttonSecondary.onDark {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
 }
 
 .actions {
@@ -234,6 +235,12 @@ button.buttonSecondary.onDark {
   width: 100%;
   height: 30px;
   background: linear-gradient(transparent, var(--green));
+}
+
+.score {
+  font-size: 1.7em;
+  flex: 1;
+  text-align: left;
 }
 
 .gridTitle {

@@ -50,6 +50,7 @@ function App() {
     setSentence,
     showRules,
     setShowRules,
+    roundNames,
   } = useContext(AppContext);
 
   let formattedSentence = formatSentence(sentence);
@@ -73,6 +74,15 @@ function App() {
       let nextStateIndex = Object.values(GAME_STATES).indexOf(currentGameState) + 1;
       if (nextStateIndex > Object.values(GAME_STATES).length - 1) {
         nextStateIndex = 0;
+      }
+      return Object.values(GAME_STATES)[nextStateIndex];
+    });
+  };
+  const handleBack = () => {
+    setGameState((currentGameState) => {
+      let nextStateIndex = Object.values(GAME_STATES).indexOf(currentGameState) - 1;
+      if (nextStateIndex < 0) {
+        return;
       }
       return Object.values(GAME_STATES)[nextStateIndex];
     });
@@ -150,6 +160,8 @@ function App() {
     </div>
   )
 
+  const filledOut = roundNames[round].filter(Boolean).length;
+
   const gamePlay = (
     <>
       <div className="settingsContainer">
@@ -175,21 +187,26 @@ function App() {
               />
             </div>
             <div className="buttonRow">
-              <button
-                className="buttonSecondary onDark"
-                onClick={() => setShowRules(true)}
-              >
-                Instructions
+              <button type="button" onClick={handleShare}>
+                Share link
               </button>
               <button className="button" onClick={handleNewGame}>
                 New game
               </button>
             </div>
+            <button
+              className="buttonSecondary onDark"
+              onClick={() => setShowRules(true)}
+            >
+              Instructions
+            </button>
           </div>
         )}
       </div>
       <div className="header">
-        <div className="timer"></div>
+        <div className="timer">
+          {filledOut} / 26
+        </div>
         <img
           className="logo"
           src="/images/initials_logo.png"
@@ -227,6 +244,9 @@ function App() {
       <div className="bottomContainer">
         <div className="buttonRow">
           <div className="score">{isScoringRound === true && score[round - 1]}</div>
+          {gameState !== GAME_STATES.ROUND1 && 
+            <button className="buttonSecondary" onClick={handleBack}>◀</button>
+          }
           <button onClick={handleAdvance}>{advanceButtonText[gameState]}</button>
         </div>
       </div>
