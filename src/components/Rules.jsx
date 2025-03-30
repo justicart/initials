@@ -30,7 +30,7 @@ export default function Rules() {
       <div className="demoLetters">
         <Row letter="A" sentenceLetter="P" index="10" readonly={true} />
         <Row letter="B" sentenceLetter="L" index="11" readonly={true} />
-        <Row letter="C" sentenceLetter="D" index="12" readonly={true} />
+        <Row letter="C" sentenceLetter="A" index="12" readonly={true} />
       </div>
       <h2>
         <span>Step 3</span>: Playing the game. Shhh! This is the quiet part.

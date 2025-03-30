@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const GAME_STATES = {
   IDLE: "idle",
@@ -31,6 +31,18 @@ export const AppProvider = (props) => {
   const [previousScores, setPreviousScores] = useState(null);
   const [roundNames, setRoundNames] = useState({ 1: [], 2: [] });
   const [sentence, setSentence] = useState("");
+
+  
+  useEffect(() => {
+    const paramsString = window.location.search;
+    const searchParams = new URLSearchParams(paramsString);
+    if (searchParams) {
+      const sentSentence = searchParams.get("sentence");
+      if (sentSentence) {
+        setSentence(decodeURI(sentSentence))
+      }
+    }
+  }, [])
 
   const isScoringRound = [GAME_STATES.ROUND2SCORING, GAME_STATES.ROUND1SCORING].includes(
     gameState

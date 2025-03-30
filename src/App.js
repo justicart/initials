@@ -56,6 +56,14 @@ function App() {
   const sentenceLeft = formattedSentence.padEnd(26, "-").slice(0, midpoint);
   const sentenceRight = formattedSentence.padEnd(26, "-").slice(midpoint, 26);
 
+  const handleShare = () => {
+    const url = `https://initialsthegame.netlify.app/?sentence=${encodeURI(sentence)}`;
+    navigator.share({
+      title: "Play Initials with me!",
+      url,
+    })
+  }
+
   const handleChange = (e) => {
     setSentence(e.target.value);
   };
@@ -99,7 +107,6 @@ function App() {
     [GAME_STATES.ROUND2]: "Round 2 scoring",
     [GAME_STATES.ROUND2SCORING]: "Review",
   }
-  console.log("IS SCORING", isScoringRound)
 
   const intro = (
     <div className="intro">
@@ -124,17 +131,20 @@ function App() {
           </div>
         </div>
         <div className="buttonRow">
-          <button
-            type="button"
-            className="button"
-            onClick={() => setShowRules(true)}
-          >
-            Instructions
+          <button type="button" onClick={handleShare}>
+            Share link
           </button>
           <button type="submit" onClick={handleStart}>
             Start game
           </button>
         </div>
+        <button
+            type="button"
+            className="buttonSecondary"
+            onClick={() => setShowRules(true)}
+          >
+            Instructions
+          </button>
       </form>
       {previousScores && <ScoreGrid previous={true} />}
     </div>
@@ -254,8 +264,6 @@ function App() {
   if (gameState === GAME_STATES.IDLE) {
     screen = intro;
   }
-
-  console.log("Game state", gameState)
 
   return (
     <div className="App">
